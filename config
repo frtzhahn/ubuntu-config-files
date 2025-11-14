@@ -219,8 +219,10 @@ bindsym $mod+Shift+p exec ~/toggle_wallpaper.sh
 bindsym $mod+Shift+o exec feh --bg-fill /home/mocha/Pictures/saved-pictures/blackhole.jpg
 bindsym $mod+Shift+i exec feh --bg-fill /home/mocha/Pictures/saved-pictures/anti-spiral.jpg
 bindsym $mod+Shift+u exec feh --bg-fill /home/mocha/Pictures/saved-pictures/black.png
+bindsym $mod+Shift+y exec feh --bg-fill /home/mocha/Pictures/saved-pictures/blue.png
+
 #bindsym $mod+Shift+y exec i3lock -i /home/mocha/Pictures/saved-pictures/sunset.png --no-unlock-indicator
-bindsym $mod+Shift+y exec i3lock --color 000000 --blur 5 --no-unlock-indicator
+bindsym $mod+Shift+t exec i3lock --color 000000 --blur 5 --no-unlock-indicator
 
 
 # Sticky window
@@ -235,7 +237,12 @@ new_float  pixel 0
 exec_always --no-startup-id python3 ~/autotiling/autotiling/main.py
 
 #keybind for emote
-bindsym $mod+Shift+a exec gnome-characters
+#bindsym $mod+Shift+a exec gnome-characters
 
-#for suspend
-bindsym $mod+Shift+t exec systemctl suspend
+bindsym Mod1+Shift+a exec sh -c "kitty -e cava & kitty -e htop & kitty -e cmatrix & kitty -e tty-clock -c -D & feh --bg-fill /home/mocha/Pictures/saved-pictures/blue.jpg"
+
+
+
+#for systemctl
+bindsym $mod+ctrl+Shift+1 exec systemctl suspend
+bindsym $mod+ctrl+Shift+2 exec systemctl reboot
