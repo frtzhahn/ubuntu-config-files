@@ -1,5 +1,12 @@
 ### ubuntu-config-files
 just putting them in here incase i lost them
 
-![Languages Count](https://img.shields.io/github/languages/count/frtzhahn/ubuntu-config-files)
+<div align="center">
+
+
+![Repo Langs](https://github-readme-stats.vercel.app/api/pin/?username=USERNAME&repo=SUCCESS-archive)
+
+
+</div>
+
 
