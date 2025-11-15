@@ -1,12 +1,15 @@
 ### ubuntu-config-files
-just putting them in here incase i lost them
+---
+just putting them in here incase i lost them  
+<br><br>
 
-<!--<div align="center">
 
 
-![Repo Langs](https://github-readme-stats.vercel.app/api/pin/?username=USERNAME&repo=SUCCESS-archive)
-
+<div align="center">
+<p align="center"> `screenshots`</p>
+<img src="gallery/blue-themed.png"/>
+<img src="gallery/black-white-themed.png"/>
 
 </div>
--->
+
 
