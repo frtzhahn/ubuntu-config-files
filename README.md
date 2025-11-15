@@ -6,7 +6,8 @@ just putting them in here incase i lost them
 
 
 <div align="center">
-<p align="center"> `screenshots`</p>
+
+`screenshots`
 <img src="gallery/blue-themed.png"/>
 <img src="gallery/black-white-themed.png"/>
 
