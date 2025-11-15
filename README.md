@@ -10,6 +10,10 @@ just putting them in here incase i lost them
 `screenshots`
 <img src="gallery/blue-themed.png"/>
 <img src="gallery/black-white-themed.png"/>
+<img src="gallery/white-setup.png"/>
+<img src="gallery/setup.png"/>
+<img src="gallery/us.png"/>
+
 
 </div>
 
