@@ -112,15 +112,33 @@ require('packer').startup(function(use)
 
 -- Discord Rich Presence for Neovim
 use {
-    "vyfor/cord.nvim",
-    config = function()
-        require("cord").setup({
-            auto_update = true,  -- optional, automatically updates presence
-            show_file = true,    -- show current file name
-            show_branch = true,  -- show git branch
-        })
-    end
+  "vyfor/cord.nvim",
+  config = function()
+    require("cord").setup({
+      auto_update = true,   -- automatically updates Discord presence
+      show_file = true,     -- show the current file name
+      show_branch = false,  -- hide git branch
+      editor_icon = true,  -- hide Neovim icon
+      workspace_text      = "Working on %s",
+      enable_line_number  = true,
+      line_number_text    = "Line %s out of %s",
+    })
+  end
 }
+
+
+
+
+--use {
+--    "vyfor/cord.nvim",
+--    config = function()
+--        require("cord").setup({
+--            auto_update = true,  -- optional, automatically updates presence
+--            show_file = false,    -- show current file name
+--            show_branch = false,  -- show git branch
+--       })
+--    end
+--}
 
 
   if packer_bootstrap then
@@ -178,11 +196,58 @@ vim.opt.laststatus = 3
 local map = vim.keymap.set
 local opts = { silent = true }
 
--- Navigate splits (using <Leader> + h/j/k/l)
-map('n', '<Leader>h', '<C-w>h', opts)
-map('n', '<Leader>j', '<C-w>j', opts)
-map('n', '<Leader>k', '<C-w>k', opts)
-map('n', '<Leader>l', '<C-w>l', opts)
+-- Horizontal split terminal
+map('n', '<Leader>th', ':split | terminal<CR>', opts)
+
+-- Vertical split terminal
+map('n', '<Leader>tv', ':vsplit | terminal<CR>', opts)
+
+-- Floating terminal
+map('n', '<Leader>tf', function()
+  vim.api.nvim_open_win(vim.api.nvim_create_buf(false, true), true, {
+    relative = 'editor',
+    width = math.floor(vim.o.columns * 0.8),
+    height = math.floor(vim.o.lines * 0.8),
+    row = math.floor(vim.o.lines * 0.1),
+    col = math.floor(vim.o.columns * 0.1),
+    style = 'minimal',
+    border = 'rounded',
+  })
+  vim.cmd('terminal')
+end, opts)
+
+
+local float_term_win
+
+map('n', '<Leader>tf', function()
+  local buf = vim.api.nvim_create_buf(false, true)
+  float_term_win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = math.floor(vim.o.columns * 0.8),
+    height = math.floor(vim.o.lines * 0.8),
+    row = math.floor(vim.o.lines * 0.1),
+    col = math.floor(vim.o.columns * 0.1),
+    style = 'minimal',
+    border = 'rounded',
+  })
+  vim.cmd('terminal')
+end, opts)
+
+
+map('n', '<Leader>tj', function()
+  if float_term_win and vim.api.nvim_win_is_valid(float_term_win) then
+    vim.api.nvim_set_current_win(float_term_win)
+  end
+end, opts)
+
+
+
+-- Navigate between splits (normal + terminal mode)
+map({'n', 't'}, '<Leader>h', '<C-\\><C-N><C-w>h', opts)
+map({'n', 't'}, '<Leader>j', '<C-\\><C-N><C-w>j', opts)
+map({'n', 't'}, '<Leader>k', '<C-\\><C-N><C-w>k', opts)
+map({'n', 't'}, '<Leader>l', '<C-\\><C-N><C-w>l', opts)
+
 
 -- Resize splits (using Ctrl + Arrow keys)
 map('n', '<C-Up>', ':resize +2<CR>', opts)
@@ -193,13 +258,12 @@ map('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 -- Close current split
 map('n', '<Leader>q', ':close<CR>', opts)
 
--- Open new horizontal split
-map('n', '<Leader>sh', ':split<CR>', opts)
 
--- Open new vertical split
-map('n', '<Leader>sv', ':vsplit<CR>', opts)
+-- Horizontal empty split
+map('n', '<Leader>sh', ':new<CR>', opts)
 
-
+-- Vertical empty split
+map('n', '<Leader>sv', ':vnew<CR>', opts)
 
 
 
@@ -307,4 +371,41 @@ map("n", "<F5>", function()
 
     vim.fn.jobstart(cmd)   -- launch Konsole
 end)
+
+
+
+-- 1️⃣ Load plugins (packer / lazy)
+require('plugins')  
+
+-- 2️⃣ Setup Nvim-Tree floating config
+require("nvim-tree").setup({
+  view = {
+    float = {
+      enable = true,
+      open_win_config = function()
+        local width = 50
+        local height = 20
+        local row = math.floor((vim.o.lines - height) / 2)
+        local col = math.floor((vim.o.columns - width) / 2)
+        return {
+          relative = "editor",
+          border = "rounded",
+          width = width,
+          height = height,
+          row = row,
+          col = col,
+        }
+      end,
+    },
+  },
+  renderer = {
+    icons = {
+      show = {
+        git = true,
+        folder = true,
+        file = true,
+      }
+    }
+  }
+})
 
